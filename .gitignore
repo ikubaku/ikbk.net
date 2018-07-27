@@ -4,3 +4,7 @@
 
 # Python
 .venv/
+
+# Ruby
+.bundler/
+.bundle/
