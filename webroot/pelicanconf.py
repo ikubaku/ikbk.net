@@ -47,9 +47,10 @@ THEME = "../pelican-themes/nest"
 # nest theme settings
 SITESUBTITLE = u'hoge'
 NEST_CSS_MINIFY = True
+NEST_HEADER_LOGO = 'logo.png'
 
 ## Header
-MENUITEMS = [('HOME', '/'), ('About', '/about.html'), ('Category', '/categories.html'), ('Info', '/info.html')]
+MENUITEMS = [('HOME', '/'), ('About', '/about.html'), ('Category', '/categories.html')]
 NEST_HEADER_IMAGE = ''
 NEST_HEADER_LOGO = ''
 
@@ -64,7 +65,7 @@ NEST_COPYRIGHT = u'&copy; Ikubaku 2018. All rights reserved.'
 ## index.html
 NEST_INDEX_HEAD_TITLE = u'Home'
 NEST_INDEX_HEADER_TITLE = u'ikbk.net'
-NEST_INDEX_HEADER_SUBTITLE = u''
+NEST_INDEX_HEADER_SUBTITLE = u'Featuring some talks and boasts. 雑談＋自慢話など'
 NEST_INDEX_CONTENT_TITLE = u'Latest News'
 
 ## archives.html
@@ -120,10 +121,11 @@ NEST_TAGS_HEADER_TITLE = u'Tags'
 NEST_TAGS_HEADER_SUBTITLE = u'Tags List'
 NEST_TAGS_CONTENT_TITLE = u'Tags List'
 NEST_TAGS_CONTENT_LIST = u'tagged'
+
 # Static files
-STATIC_PATHS = ['images', 'extra/robots.txt', 'extra/favicon.ico', 'extra/logo.svg']
+STATIC_PATHS = ['images', 'extra/robots.txt', 'extra/favicon.ico', 'extra/logo.png']
 EXTRA_PATH_METADATA = {
     'extra/robots.txt': {'path': 'robots.txt'},
     'extra/favicon.ico': {'path': 'favicon.ico'},
-    'extra/logo.svg': {'path': 'logo.svg'}
+    'extra/logo.png': {'path': 'logo.png'}
 }
