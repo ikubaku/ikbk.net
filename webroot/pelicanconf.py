@@ -26,7 +26,7 @@ LINKS = (('Kyoto Institute of Technology', 'https://www.kit.ac.jp/'),
          ('KITCC', 'http://www.kitcc.org/'),)
 
 # Social widget
-SOCIAL = (('GitHub(TBD)', '#'),
+SOCIAL = (('GitHub', 'https://github.com/ikubaku'),
           ('Twitter', 'https://twitter.com/ikubaku10'),)
 
 DEFAULT_PAGINATION = 10
