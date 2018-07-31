@@ -45,14 +45,13 @@ ASCIIDOC_CMD = "asciidoctor"
 THEME = "../pelican-themes/nest"
 
 # nest theme settings
-SITESUBTITLE = u'hoge'
+SITESUBTITLE = u''
 NEST_CSS_MINIFY = True
-NEST_HEADER_LOGO = 'logo.png'
 
 ## Header
 MENUITEMS = [('HOME', '/'), ('About', '/about.html'), ('Category', '/categories.html')]
 NEST_HEADER_IMAGE = ''
-NEST_HEADER_LOGO = ''
+NEST_HEADER_LOGO = 'logo.png'
 
 ## Footer
 NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
