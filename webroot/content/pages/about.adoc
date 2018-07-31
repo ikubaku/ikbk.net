@@ -3,8 +3,7 @@
 :save_as: about.html
 :slug: about
 
-[horizontal]
-HN:: Ikubaku
+== Ikubaku
 
 An undergraduate student of Kyoto Institute of Technology.  Geek wannabe.　Likes programming, electronics.
 
