@@ -51,7 +51,7 @@ NEST_CSS_MINIFY = True
 ## Header
 MENUITEMS = [('HOME', '/'), ('About', '/about.html'), ('Category', '/categories.html')]
 NEST_HEADER_IMAGE = ''
-NEST_HEADER_LOGO = 'logo.png'
+NEST_HEADER_LOGO = '/logo.png'
 
 ## Footer
 NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
