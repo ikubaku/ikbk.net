@@ -3,11 +3,24 @@
 :save_as: about.html
 :slug: about
 
-== Ikubaku
+== ikubaku
 
 An undergraduate student of Kyoto Institute of Technology.  Geek wannabe.　Likes programming, electronics.
 
 京都工芸繊維大学B2。ちゃんとしたGeekになりたい。プログラミング、電子工作とか
+
+=== やってること - What I Do
+* C#, Pythonなどでゲーム制作など - Making games etc. with C#, Python...
+* 電子工作 - Making gadgets
+* お絵かき・画像編集 - drawing & graphics(photographs)
+
+=== 好きなこと
+* ゲーム - Playing games
+* 音楽（VGM、ポピュラー音楽を中心に） - Musics(esp. VGM and pop musics)
+
+=== 所属サークル等 - Circles & Teams I belong to
+* link:http://www.kitcc.org/[京都工芸繊維大学コンピュータ部 - Kyoto Institute of Technology Computer Club aka. KITCC]
+* link:https://www.kmc.gr.jp/[京大マイコンクラブ - Kyoto University Microcomputer Club aka. KMC]
 
 　 +
 
