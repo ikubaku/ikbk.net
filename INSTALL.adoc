@@ -1,5 +1,17 @@
 = Setting-up note
 
+== Prerequisites(current:2018/09/14)
+* ruby (Any version, known to work with 2.5.1p57)
+* ruby-bundler (Any version, known to work with 1.16.1)
+* python3 (3.3.x or greater, known to work with 3.6.5)
+* python3-pipenv (Any version, known to work with 2018.7.1)
+
+== Prepare the virtual environment
+[source]
+----
+$ ./prepare.sh
+----
+
 == pelican
 [source]
 ----
