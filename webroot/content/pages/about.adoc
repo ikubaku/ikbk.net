@@ -5,14 +5,14 @@
 
 == ikubaku
 
-An undergraduate student of Kyoto Institute of Technology.  Geek wannabe.　Likes programming, electronics.
+An unknown device.  Geek wannabe.  Likes programming, electronics.
 
-京都工芸繊維大学B2。ちゃんとしたGeekになりたい。プログラミング、電子工作とか
+不明なデバイス。ちゃんとしたGeekになりたい。プログラミング、電子工作とか
 
 === やってること - What I Do
 * C#, Pythonなどでゲーム制作など - Making games etc. with C#, Python...
 * 電子工作 - Making gadgets
-* お絵かき・画像編集 - drawing & graphics(photographs)
+* お絵かき・画像編集 - Drawing & Graphics(photographs)
 
 === 好きなこと
 * ゲーム - Playing games
