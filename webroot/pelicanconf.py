@@ -21,8 +21,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Kyoto Institute of Technology', 'https://www.kit.ac.jp/'),
-         ('KMC', 'https://www.kmc.gr.jp/'),
+LINKS = (('KMC', 'https://www.kmc.gr.jp/'),
          ('KITCC', 'http://www.kitcc.org/'),)
 
 # Social widget
