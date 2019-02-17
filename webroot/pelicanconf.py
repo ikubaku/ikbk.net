@@ -26,7 +26,8 @@ LINKS = (('KMC', 'https://www.kmc.gr.jp/'),
 
 # Social widget
 SOCIAL = (('GitHub', 'https://github.com/ikubaku'),
-          ('Twitter', 'https://twitter.com/ikubaku10'),)
+          ('Twitter', 'https://twitter.com/ikubaku10'),
+          ('facebook', 'https://www.facebook.com/ikubaku10'),)
 
 DEFAULT_PAGINATION = 10
 
