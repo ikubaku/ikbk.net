@@ -49,7 +49,7 @@ SITESUBTITLE = u''
 NEST_CSS_MINIFY = True
 
 ## Header
-MENUITEMS = [('HOME', '/'), ('About', '/about.html'), ('Category', '/categories.html')]
+MENUITEMS = [('HOME', '/'), ('About', '/about.html'), ('Works', '/works.html'), ('Category', '/categories.html')]
 NEST_HEADER_IMAGE = ''
 NEST_HEADER_LOGO = '/logo.png'
 

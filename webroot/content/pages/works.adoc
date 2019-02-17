@@ -1,0 +1,18 @@
+= Works
+
+:save_as: works.html
+:slug: works
+
+== ゲーム(Games)
+
+=== Avoid Boiled!
+ゆでたまごにならないようにひたすら暑い日差しを避け続けるゲームです。Unity1週間ゲームジャムの一環で制作しました。
+
+プラットフォーム:: PC（WebGLが利用可能なブラウザ）
+リンク:: https://unityroom.com/games/avoidboiled
+
+=== くじ引き放題
+ガラガラを回しまくって時間内にあたりをできるだけたくさん出すことを目指すゲームです。年明け記念として制作。
+
+プラットフォーム:: PC（WebGLが利用可能なブラウザ）
+リンク:: https://unityroom.com/games/kujihikihodai
