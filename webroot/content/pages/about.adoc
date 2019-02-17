@@ -3,11 +3,11 @@
 :save_as: about.html
 :slug: about
 
-== ikubaku
+== ikubaku(Hideyuki Teramura)
 
-An unknown device.  Geek wannabe.  Likes programming, electronics.
+An unknown device.  Likes programming, electronics.
 
-不明なデバイス。ちゃんとしたGeekになりたい。プログラミング、電子工作とか
+不明なデバイス。プログラミング、電子工作とか
 
 === やってること - What I Do
 * C#, Pythonなどでゲーム制作など - Making games etc. with C#, Python...
@@ -27,3 +27,5 @@ An unknown device.  Geek wannabe.  Likes programming, electronics.
 Any questions? Contact:
 
 ご質問などはメールで: tennesy0 AT yahoo.jp
+
+PGP: Hideyuki Teramura<hide4d51@gmail.com>3765 017C 7DEC 81FD C185 98F9 0F27 D4CE FD84 FC7D
