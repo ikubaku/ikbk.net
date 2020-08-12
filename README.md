@@ -4,10 +4,11 @@ Ikubaku's external website
 # Usage
 To generate th website, run the follwing;
 ```
+$ source .venv/bin/activate
 $ cd ./webroot
-$ PATH=../:$PATH python3 -m pipenv run pelican content
-# For preview;
-$ python3 -m pipenv shell
+$ PATH=../:$PATH pelican content
+
+# For preview, after activating the virtual environment;
 $ cd ./webroot/output
 $ python3 -m pelican.server
 ```
