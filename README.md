@@ -9,6 +9,5 @@ $ cd ./webroot
 $ PATH=../:$PATH pelican content
 
 # For preview, after activating the virtual environment;
-$ cd ./webroot/output
-$ python3 -m pelican.server
+$ pelican -l -p 8080
 ```
