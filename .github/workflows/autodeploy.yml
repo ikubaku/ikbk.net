@@ -1,0 +1,21 @@
+name: Automated Build & Deploy
+
+on:
+  push:
+    branches: [ deploy ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Prepare the build environment
+      run: ./prepare.sh
+
+    - name: Build the Webpage
+      run: |
+        source .venv/bin/activate
+        cd ./webroot
+        PATH=../:$PATH pelican content
