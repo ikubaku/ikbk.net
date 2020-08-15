@@ -4,22 +4,32 @@
 
 == ikubaku(Hideyuki Teramura)
 
-An unknown device.  Likes programming, electronics.
+An unknown device. Likes programming, electronics. An undergraduate learning at the Department of Information Science, https://www.kit.ac.jp/[Kyoto Institute of Technology].
 
-不明なデバイス。プログラミング、電子工作とか
+不明なデバイス。プログラミング、電子工作とか。京都工芸繊維大学、情報工学課程
+
 
 === やってること - What I Do
 * C#, Pythonなどでゲーム制作など - Making games etc. with C#, Python...
 * 電子工作 - Making gadgets
 * お絵かき・画像編集 - Drawing & Graphics(photographs)
 
-=== 好きなこと
+=== 好きなこと - What I Like
 * ゲーム - Playing games
 * 音楽（VGM、ポピュラー音楽を中心に） - Musics(esp. VGM and pop musics)
+
+=== マイブーム - Recent interests
+* Rust・Zigでのベアメタル開発 - Baremetal development with Rust / Zig
 
 === 所属サークル等 - Circles & Teams I belong to
 * link:http://www.kitcc.org/[京都工芸繊維大学コンピュータ部 - Kyoto Institute of Technology Computer Club aka. KITCC]
 * link:https://www.kmc.gr.jp/[京大マイコンクラブ - Kyoto University Microcomputer Club aka. KMC]
+* https://kc3.me/[関西情報系学生団体交流会 - KC3]
+* https://twitter.com/TechGarageKyoto[TechGarage]
+
+=== 実績解除リスト - Achievement Unlocked™
+* セキュリティ・キャンプ2019全国大会参加 - Security Camp 2019 Japan
+* 冬KC3 2018 チームハッカソン入賞 - Awarded as a team in Winter KC3 Hackathon
 
 　 +
 
@@ -27,4 +37,4 @@ Any questions? Contact:
 
 ご質問などはメールで: tennesy0 AT yahoo.jp
 
-PGP: Hideyuki Teramura<hide4d51@gmail.com>3765 017C 7DEC 81FD C185 98F9 0F27 D4CE FD84 FC7D
+PGP: Hideyuki Teramura<hide4d51 at gmail.com>3765 017C 7DEC 81FD C185 98F9 0F27 D4CE FD84 FC7D
