@@ -11,6 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - shell: bash
+      env:
+        SSH_USER: ${{ secrets.AssetSyncUsername }}
+        SSH_PORT: ${{ secrets.SshPort }}
+        SSH_SECRET_KEY: ${{ secrets.SshSecretKey }}
+        SSH_KNOWN_HOSTS: ${{ secrets.SshKnownHosts }}
+    
     - uses: actions/checkout@v2
       
     - uses: actions/setup-ruby@v1
@@ -34,3 +41,14 @@ jobs:
         source .venv/bin/activate
         cd ./webroot
         PATH=../:$PATH pelican content -s publishconf.py
+
+    - name: Populate SSH credentials
+      run: |
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+        echo "$SSH_SECRET_KEY" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+    - name: Deploy the webpage
+      run: rsync -ac --delete -e 'ssh -p "$SSH_PORT" -l "$SSH_USER" output/ testing.ikbk.net:/srv/http/
