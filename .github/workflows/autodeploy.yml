@@ -52,4 +52,4 @@ jobs:
       env:
         SSH_USER: ${{ secrets.ASSET_SYNC_USERNAME }}
         SSH_PORT: ${{ secrets.SSH_PORT }}
-      run: rsync -ac --delete -e "ssh -p $SSH_PORT -l $SSH_USER" output/ testing.ikbk.net:/srv/http/
+      run: rsync -ac --delete -e "ssh -p $SSH_PORT -l $SSH_USER" webroot/output/ testing.ikbk.net:/srv/http/
