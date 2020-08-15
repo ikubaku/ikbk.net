@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'Ikubaku'
+AUTHOR = 'ikubaku'
 SITENAME = 'ikbk.net'
 SITEURL = ''
 
@@ -59,7 +59,7 @@ NEST_SITEMAP_MENU = [('Archives', '/archives.html'),('Tags','/tags.html'), ('Aut
 NEST_SITEMAP_ATOM_LINK = u'Feed'
 NEST_SOCIAL_COLUMN_TITLE = u'Meet me at:'
 NEST_LINKS_COLUMN_TITLE = u'Links'
-NEST_COPYRIGHT = u'&copy; Ikubaku 2018. All rights reserved.'
+NEST_COPYRIGHT = u'&copy; ikubaku 2020. All rights reserved.'
 
 ## index.html
 NEST_INDEX_HEAD_TITLE = u'Home'
