@@ -4,4 +4,4 @@
 	branch = force-utf8
 [submodule "theme/nest"]
 	path = theme/nest
-	url = https://github.com/molivier/nest.git
+	url = https://github.com/kuoteng/nest.git
