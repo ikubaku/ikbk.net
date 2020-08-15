@@ -2,6 +2,6 @@
 	path = pelican-plugins
 	url = https://github.com/ikubaku/pelican-plugins.git
 	branch = force-utf8
-[submodule "pelican-themes"]
-	path = pelican-themes
-	url = https://github.com/getpelican/pelican-themes
+[submodule "theme/nest"]
+	path = theme/nest
+	url = https://github.com/kuoteng/nest.git

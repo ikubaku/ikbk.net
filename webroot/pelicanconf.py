@@ -42,7 +42,7 @@ PLUGINS = ['asciidoc_reader']
 ASCIIDOC_CMD = "asciidoctor"
 
 # Theme
-THEME = "../pelican-themes/nest"
+THEME = "../theme/nest"
 
 # nest theme settings
 SITESUBTITLE = u''
