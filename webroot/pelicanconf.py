@@ -55,7 +55,7 @@ NEST_HEADER_LOGO = '/logo.png'
 
 ## Footer
 NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
-NEST_SITEMAP_MENU = [('Archives', '/archives/'),('Tags','/tags/'), ('Authors','/authors/')]
+NEST_SITEMAP_MENU = [('Archives', '/archives/'),('Tags','/tags/')]
 NEST_SITEMAP_ATOM_LINK = u'Feed'
 NEST_SOCIAL_COLUMN_TITLE = u'Meet me at:'
 NEST_LINKS_COLUMN_TITLE = u'Links'
