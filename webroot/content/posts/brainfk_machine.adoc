@@ -1,0 +1,101 @@
+= brainf*ckマシンを作った話
+
+:date: 2019-12-30 23:45
+:slug: brainfk_machine
+:tags: hardware, technical
+:category: 技術系
+
+== NOTE
+これは https://adventar.org/calendars/4630[OS-CPU Advent Calendar 2019]の25日目の記事です！！（大遅刻！！！！）
+
+今日は高位合成向けのスクリプト言語 https://github.com/nlsynth/karuta[Karuta] と https://japan.xilinx.com/products/boards-and-kits/1-f3zdsm.html[Digilent Cmod A7-35T] を使ってbrainf*ckマシンを作った話です。
+
+ソースコードはこちら: https://github.com/ikubaku/bfmachine
+
+== brainf*ckって何よ？
+brainf*ckは仕様が極めて簡単なプログラミング言語の一つです。例えば次のソースコードからなるbrainf*ckプログラムは `Hello World!` と出力します（出典: https://github.com/leachim6/hello-world ）。
+
+[source, brainfuck]
+----
+++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.
+----
+
+このようにたったの7種類の文字の羅列だけでかけてしまいます。簡単ですね。（？？？？？？）
+
+大規模なプログラムをbrainf*ckで実装する困難さはともかくとして、その仕様の簡単さからbrainf*ckの処理系はかなり容易に実装できます。（具体的な仕様はここで紹介しても記事を無駄に長くしてしまうだけですので説明を省略します。）
+
+== brainf*ckマシン
+もちろんbrainf*ckの処理系をパソコンの上で動くプログラムとして組むこともできるのですがそれではちょっと面白くありません。そこでもう一つの有名な（？）やり方としてbrainf*ckプログラムを直接解釈して実行するコンピュータである「brainf*ckマシン」を作ってみることにしました。ただ、パソコンのように画面とキーボードを付けるところまで作るのは大変ですからUART通信（シリアル通信）でプログラムと入出力データをやり取りすることにしました。
+
+== 作ってみる
+既にあるCPUの上で動くものではなく、論理回路のレベルから作り上げていくので製作にはFPGAを用います。FPGAは内部に大量のLE（論理回路の元のような回路）と配線をもっているLSIで、これを使うことでハードウェア記述言語などで表現した自作の論理回路を動かすことができます。
+
+FPGAを使った開発には既にFPGAとその他周辺機器が実装されているFPGA開発基板が便利です。今回はどうしてもAXIバスでつながるUARTトランシーバIPを使いたかったのでボードにはXilinxのArtix-7が搭載されたCmod A7-35Tをチョイスしました。
+
+=== 解釈部の実装と高位合成
+この部分の実装はハードウェア記述言語でもできますが、ここでは高位合成向けの言語であるKarutaを使って実装を行いました。FPGAの開発ではハードウェア記述言語を使ってRTLで論理回路を記述するのが素朴な方法ですが、パソコンのプログラム作成に使うような言語で書かれた処理を論理回路に落とし込む方法もあります。これは高位合成と呼ばれていて、CやScalaで書かれた処理を変換するものなどがあります（Chiselなど）。実際、今回実装した解釈部の主要なコードはほとんどパソコン向けに書かれた処理と同じような形になりました。是非brainf*ckのC言語での実装などと見比べてみてください。
+
+.brainf*ckプログラムを解釈・実行する部分のコード
+[source, karuta]
+----
+func exec() {
+    pbuf_idx = 0;
+    dbuf_idx = 0;
+    while(pbuf[pbuf_idx] != 0x0D && pbuf[pbuf_idx] != 0x0A) {
+        if(pbuf[pbuf_idx] == 0x3E) {  // <
+            dbuf_idx--;
+        } else if(pbuf[pbuf_idx] == 0x3C) {  // >
+            dbuf_idx++;
+        } else if(pbuf[pbuf_idx] == 0x2B) {  // +
+            dbuf[dbuf_idx]++;
+        } else if(pbuf[pbuf_idx] == 0x2D) {  // -
+            dbuf[dbuf_idx]--;
+        } else if(pbuf[pbuf_idx] == 0x2E) {  // .
+            // Wait for on-going transmission
+            while(!can_send_byte()) {};
+            main_bus[0] = dbuf[dbuf_idx];
+            main_bus.store(0x40600004, 0, 0);
+        } else if(pbuf[pbuf_idx] == 0x2C) {  // ,
+            // Wait for reception
+            while(!available()) {};
+            // Read a byte
+            main_bus.load(0x40600000, 0, 0);
+            dbuf[dbuf_idx] = main_bus[0];
+        } else if(pbuf[pbuf_idx] == 0x5B) {  // [
+            if(dbuf[dbuf_idx] == 0) {
+                while(pbuf[pbuf_idx] != 0x5D) {
+                    pbuf_idx++;
+                }
+            }
+        } else if(pbuf[pbuf_idx] == 0x5D) {  // ]
+            if(dbuf[dbuf_idx] != 0) {
+                while(pbuf[pbuf_idx] != 0x5B) {
+                    pbuf_idx--;
+                }
+            }
+        }
+
+        pbuf_idx++;
+    }
+}
+----
+
+=== 全体構成
+上記のコードにUARTトランシーバとの通信用コードを追加して解釈部を完成させたら、開発環境で用意されているクロック生成回路やUARTトランシーバ、AXIバス制御回路を接続して完成です。下の接続図の `bfmachine_0` が先ほど紹介した解釈部のモジュールです。
+
+image::https://i.gyazo.com/8ff662a2abeb224b523194f11d2d566e.png[]
+
+== 動かしてみる
+実際にbrainf*ckマシンで先ほど紹介したHello Worldプログラムとエコーバックプログラム（スクショした時の自分は `cat` の気分で書いているっぽいが間違い）を動作させた様子を載せます。
+
+image::https://i.gyazo.com/8571bba8b96e88602d61d86d75e1a65b.png[]
+
+最初の方で出力が化けていますが、こうなるのはデータメモリを実行毎に初期化していないからです。プログラムが終了したあとにデータメモリを0埋めすると同じプログラムに対しては同じ動作をするようになります。
+
+== おわりに
+高位合成を用いることでbrainf*ckプログラムを解釈する部分をパソコン上で動く処理系を作るのと同じような感覚で作ることができました。今回作ったものでは通常の処理系と同じことあるいはそれ以下のことしかできませんが、これに改造を加えてメモリの内容に合わせてLEDやモーターが動くようにすると更に面白いことができそうです。
+
+== 2020/08/15追記
+このbrainf*ckマシンのコードがGitHub Archive Programで保存されたものの中に含まれていました。1000年後に掘り出されても困惑されそう...。
+
+https://archiveprogram.github.com/

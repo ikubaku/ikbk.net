@@ -21,13 +21,14 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('KMC', 'https://www.kmc.gr.jp/'),
-         ('KITCC', 'http://www.kitcc.org/'),)
+LINKS = (('KIT SEL', 'https://se.is.kit.ac.jp/'),
+         ('KMC', 'https://www.kmc.gr.jp/'),
+         ('KITCC', 'http://www.kitcc.org/'),
+         ('TechGarage', 'https://twitter.com/TechGarageKyoto/'),)
 
 # Social widget
 SOCIAL = (('GitHub', 'https://github.com/ikubaku'),
-          ('Twitter', 'https://twitter.com/ikubaku10'),
-          ('facebook', 'https://www.facebook.com/ikubaku10'),)
+          ('Twitter', 'https://twitter.com/ikubaku10'),)
 
 DEFAULT_PAGINATION = 10
 
@@ -52,6 +53,7 @@ NEST_CSS_MINIFY = True
 MENUITEMS = [('HOME', '/'), ('About', '/about/'), ('Works', '/works/'), ('Category', '/categories/')]
 NEST_HEADER_IMAGE = ''
 NEST_HEADER_LOGO = '/logo.png'
+DISPLAY_PAGES_ON_MENU = False
 
 ## Footer
 NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
