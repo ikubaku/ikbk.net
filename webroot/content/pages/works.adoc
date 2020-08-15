@@ -15,3 +15,15 @@
 
 プラットフォーム:: PC（WebGLが利用可能なブラウザ）
 リンク:: https://unityroom.com/games/kujihikihodai
+
+== 小ネタ(Toys, tiny stuff & etc.)
+
+=== lpc812_bootapi_zig
+Zig言語で書いたファームウェアからLPC81x系のブートROM APIを呼び出すサンプル
+
+リンク:: https://github.com/ikubaku/lpc812_bootapi_zig
+
+=== bfmachine
+brainf*ckマシン。Karutaで実装
+
+リンク:: https://github.com/ikubaku/bfmachine
