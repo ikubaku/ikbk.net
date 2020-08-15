@@ -49,13 +49,13 @@ SITESUBTITLE = u''
 NEST_CSS_MINIFY = True
 
 ## Header
-MENUITEMS = [('HOME', '/'), ('About', '/about.html'), ('Works', '/works.html'), ('Category', '/categories.html')]
+MENUITEMS = [('HOME', '/'), ('About', '/about/'), ('Works', '/works/'), ('Category', '/categories/')]
 NEST_HEADER_IMAGE = ''
 NEST_HEADER_LOGO = '/logo.png'
 
 ## Footer
 NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
-NEST_SITEMAP_MENU = [('Archives', '/archives.html'),('Tags','/tags.html'), ('Authors','/authors.html')]
+NEST_SITEMAP_MENU = [('Archives', '/archives/'),('Tags','/tags/'), ('Authors','/authors/')]
 NEST_SITEMAP_ATOM_LINK = u'Feed'
 NEST_SOCIAL_COLUMN_TITLE = u'Meet me at:'
 NEST_LINKS_COLUMN_TITLE = u'Links'
@@ -130,5 +130,22 @@ EXTRA_PATH_METADATA = {
 }
 
 # Paths
-ARTICLE_URL = 'posts/{slug}.html'
-ARTICLE_SAVE_AS = 'posts/{slug}.html'
+ARTICLE_URL = 'posts/{slug}/'
+ARTICLE_SAVE_AS = 'posts/{slug}/index.html'
+
+PAGE_URL = '{slug}'
+PAGE_SAVE_AS = '{slug}/index.html'
+
+AUTHOR_URL = 'author/{slug}/'
+AUTHOR_SAVE_AS = 'author/{slug}/index.html'
+
+CATEGORY_URL = 'category/{slug}/'
+CATEGORY_SAVE_AS = 'category/{slug}/index.html'
+
+TAG_URL = 'tag/{slug}/'
+TAG_SAVE_AS = 'tag/{slug}/index.html'
+
+ARCHIVES_SAVE_AS = 'archives/index.html'
+AUTHORS_SAVE_AS = 'authors/index.html'
+CATEGORIES_SAVE_AS = 'categories/index.html'
+TAGS_SAVE_AS = 'tags/index.html'
