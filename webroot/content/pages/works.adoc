@@ -1,6 +1,5 @@
 = Works
 
-:save_as: works.html
 :slug: works
 
 == ゲーム(Games)

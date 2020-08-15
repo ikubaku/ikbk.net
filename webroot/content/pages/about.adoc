@@ -1,6 +1,5 @@
 = About
 
-:save_as: about.html
 :slug: about
 
 == ikubaku(Hideyuki Teramura)
