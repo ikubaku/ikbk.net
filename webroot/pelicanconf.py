@@ -51,7 +51,7 @@ SITESUBTITLE = u''
 NEST_CSS_MINIFY = True
 
 ## Header
-MENUITEMS = [('HOME', '/'), ('About', '/about/'), ('Works', '/works/'), ('The Hall of Fame', 'hall_of_fame'), ('Category', '/categories/')]
+MENUITEMS = [('HOME', '/'), ('About', '/about/'), ('Works', '/works/'), ('The Hall of Fame', '/hall_of_fame/'), ('Category', '/categories/')]
 NEST_HEADER_IMAGE = ''
 NEST_HEADER_LOGO = '/logo.png'
 DISPLAY_PAGES_ON_MENU = False
