@@ -1,0 +1,16 @@
+= Cytus - 記録一覧（結果はAlive曲、裏譜面を除く）
+
+:slug: cytus
+:save_as: /hall_of_fame/{slug}/index.html
+
+== TP100(AP)
+なし
+
+== Million Master
+|===
+|EASY   |40 / 221
+|HARD   |23 / 221
+|===
+
+== Freedom D↓ve [HARD 9]
+未プレイ

@@ -7,6 +7,7 @@ SITENAME = 'ikbk.net'
 SITEURL = ''
 
 PATH = 'content'
+PAGE_PATHS = ['error_pages', 'about', 'works', 'hall_of_fame']
 
 TIMEZONE = 'Asia/Tokyo'
 
@@ -50,7 +51,7 @@ SITESUBTITLE = u''
 NEST_CSS_MINIFY = True
 
 ## Header
-MENUITEMS = [('HOME', '/'), ('About', '/about/'), ('Works', '/works/'), ('Category', '/categories/')]
+MENUITEMS = [('HOME', '/'), ('About', '/about/'), ('Works', '/works/'), ('The Hall of Fame', '/hall_of_fame/'), ('Category', '/categories/')]
 NEST_HEADER_IMAGE = ''
 NEST_HEADER_LOGO = '/logo.png'
 DISPLAY_PAGES_ON_MENU = False
@@ -131,12 +132,15 @@ EXTRA_PATH_METADATA = {
     'extra/logo.png': {'path': 'logo.png'}
 }
 
+# Path Metadata
+PATH_METADATA = '(?P<path_no_ext>.*)\..*'
+
 # Paths
 ARTICLE_URL = 'posts/{slug}/'
 ARTICLE_SAVE_AS = 'posts/{slug}/index.html'
 
-PAGE_URL = '{slug}/'
-PAGE_SAVE_AS = '{slug}/index.html'
+PAGE_URL = '{path_no_ext}.html'
+PAGE_SAVE_AS = '{path_no_ext}.html'
 
 AUTHOR_URL = 'author/{slug}/'
 AUTHOR_SAVE_AS = 'author/{slug}/index.html'
