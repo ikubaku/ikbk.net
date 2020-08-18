@@ -5,4 +5,4 @@
 [submodule "theme/nest"]
 	path = theme/nest
 	url = https://github.com/ikubaku/nest.git
-	branch = fix-type-error
+	branch = master
