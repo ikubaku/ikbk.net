@@ -1,7 +1,7 @@
 # ikbk.net
 Ikubaku's external website
 
-# Usage
+## Usage
 To generate th website, run the follwing;
 ```
 $ source .venv/bin/activate
