@@ -1,0 +1,214 @@
+= Seeed Arduino DAPLinkを試す
+
+:date: 2020-12-20 00:00
+:slug: seeed_arduino_daplink
+:tags: technical, hardware, debugging
+:category: 技術系
+:summary: Seeed Arduino DAPLinkをSeeeduino XIAOで動かしてみました
+
+これはKMCアドベントカレンダー2020: https://adventar.org/calendars/5654 の20日目の記事です！！昨日の記事はpastakさんの「ウェブブラウザにバグ報告を送る方法について」でした: https://blog.pastak.net/entry/2020/12/19/140000 。
+
+== デバッグアダプタ探し
+少し前からARM Cortex-MやRISC-Vを採用したマイコンボードが増えてきました。ところがそれらのボードにはたまにオンボードデバッガがついておらずデバッグアダプタを別に入手する必要があります。また、マイコンやモジュール単体で自分の作品に組み込もうとするとプログラムのダウンロードのためにアダプタがいるので少し本格的なものを作ろうとするとデバッグアダプタを持っていないと結構不便です。
+
+マイコンのデバッグアダプタやそのために使えるパーツは電子部品ショップのサイトなどを見ているといろいろなものがヒットします。例えばFT232HやFT2232Hを使ったUSBシリアル変換基板はチップのMPSSE機能を用いてSWD/JTAGアダプタとして機能させることができます。ほかにもUSB機能付きの安価なマイコンを使ったBlack Magic Probe: https://github.com/blacksphere/blackmagic やARM社によって仕様が公開されているCMSIS-DAPの実装であるDAPLink（LPC11U35を使ったものなどが有名でしょうか）などが見つかります。
+
+私もSTM32やGD32V系MCUや安価なnRF5系モジュールのデバッグ及び書き込み用にST-Linkよりも小型のデバッグプローブが欲しくなってきたのでさきほど上げたものなどから良さそうなものをしばらく探していました。その中でSeeeduino XIAOを使ったDAPLinkが良さそうだなと思ったのでここで紹介します。
+
+== Seeeduino XIAO
+Seeeduino XIAO: https://wiki.seeedstudio.com/Seeeduino-XIAO/ はATSAMD21を使った小型のArduino互換機です。搭載されているUSB Type-CポートでPCと接続するとUSBデバイスとして動作することができ、例えばUSB HIDとしてマウスやキーボードになることができます。プログラムの書き込みはArduino IDEから書き込むことはもちろん、ブートローダ実行中はUSBマスストレージデバイスとして動作しUF2形式のバイナリをPCからコピーすることで書き込むこともできます。UF2さえ用意できればファームウェアの書き換えができ、microUSB-Bよりもつなぎやすさや耐久性の点（ほんと？）で有利なUSB Type-Cポートを搭載したSeeeduino XIAOはUSBを利用した電子工作に便利そうです。
+
+== Seeeduino XIAO向けのCMSIS-DAP実装
+Seeeduino XIAOで使うことのできるCMSIS-DAP実装は私が調べた限りでは2種類ほどあります。1つはfree-dap: https://github.com/ataradov/free-dap 、もう1つはSeeed Arduino DAPLink: https://github.com/Seeed-Studio/Seeed_Arduino_DAPLink です。
+
+=== free-dap
+free-dapはCMSIS-DAPを1から実装したもので、必要な関数をプラットフォームごとに実装することで好きなMCUやマイコンボードで動作させることができます（詳しくは同プロジェクトの `README.md` 参照）。
+
+現在Kenta IDAさんによるSeeeduino XIAO向けのプラットフォーム定義があり、それを使ってSeeeduino XIAOで動作させることができるようです: https://speakerdeck.com/ciniml/seeeduino-xiaodecmsis-dapdebatugawozuo-ru 。データ転送にUSBバルク転送を用いるバージョンも作成してありUSB HIDを用いる場合よりも高速にデバッグができるそうです。
+
+=== Seeed Arduino DAPLink
+Seeed Arduino DAPLink: https://github.com/Seeed-Studio/Seeed_Arduino_DAPLink はSeeeduino XIAOとWio Terminalで動作するDAPLinkです。これらマイコンボードのArduino Coreに乗っかる形で作られており、Arduino IDEでコンパイルできる他UF2形式でファームウェアのバイナリも配布されています。コードはDAPLink本家: https://github.com/ARMmbed/DAPLink のソースコードをベースにしているようです。
+
+こちらは先ほど紹介したfree-dapとは異なり、今の所USB HIDによるデータ転送にだけ対応しているようですが、一方でJTAGアダプタとして機能することができます。そのためOpenOCDなどのドライバが対応していればSWDがないターゲットでも接続することができます。
+
+== Seeed Arduino DAPLinkを準備する
+=== 準備
+Seeeduino XIAOにSeeed Arduino DAPLinkにするにはWikiにあるUF2ファイルをボードを書き込みモードにしてからコピーして書き込みます。具体的な手順はWikiを参照してください: https://wiki.seeedstudio.com/Seeeduino-XIAO-DAPLink/ 。
+
+自分でコンパイルして書き込むにはまずArduino IDEにSeeed SAMDボード定義（v1.8.1以降が必要です）をインストールしてSeeed Arduino DAPLinkのリポジトリにあるライブラリをIDEの `libraries` ディレクトリにコピーします。するとそのライブラリのWxample Sketchである `simple_daplink` がメニューに追加されるのでそれを開いて書き込みます。
+
+=== ピン配置
+ピン配置は下の表のとおりです。同Wikiの内容とソースコードを参考にして作成しました（ピン配置はライブラリの `src/DAP_config.h` に定義されていて、もちろん変更もできると思われます）。
+
+|===
+|ピン番号 |CMSIS-DAPにおけるピン名
+
+|2  |TDO
+|3  |TDI
+|8  |nRESET
+|9  |SWDIO/TMS
+|10 |SWCLK/TCK
+|===
+
+また `simple_daplink` では6, 7ピンにそれぞれUART TX, RXピンが割り振ってあり、仮想ターミナルでSeeeduino XIAOに接続することで外部のデバイスと通信することができます。ライブラリを改造すればSWOの信号を拾うことにも使えそうです。
+
+== SWDを使ってSTM32F103と接続
+まずはSWDを使って手頃なARM MCUに書き込み＋デバッグできるか試してみました。ターゲットはBluePillのような何かです。以前にNucleoについていたST-Linkで書き込み＋デバッグできたことを確認しています。
+
+最初にマイコンボードとSeeeduino XIAOを接続します。SWDを使う場合はGND, SWDIO, SWCLK, nRESETを接続します。BluePillをターゲットにする場合は次の写真のような接続になると思います（違うことがあると思うので自分の基板のシルク表示を信じてください）。ジャンパ線の赤黒はそれぞれVDDとGND、黄緑白は順にSWDIO, SWCLK, nRESETです。
+
+image::{static}/images/{slug}/swd_connection.png[]
+
+今回使うプログラムはstm32f1xx-hal: https://github.com/stm32-rs/stm32f1xx-hal の `examples/blinky.rs` です。このサンプルプログラムをビルドするには `thumbv7m-none-eabi` ターゲットを自分のRust開発環境に `rustup` などで追加した後、同クレートのリポジトリルートディレクトリで次のコマンドを実行します。
+
+[source]
+----
+$ cargo build --example blinky --features stm32f103
+----
+
+ビルドが成功すると実行ファイルが `target/thumbv7m-none-eabi/debug/examples/blinky` に作成されます。
+
+その次は実際にデバッグアダプタに化けたSeeeduino XIAOとOpenOCDを使ってMCUのデバッグユニットに接続します。パッケージマネージャなどからダウンロードできるOpenOCDにはたいていCMSIS-DAPとSTM32用の設定スクリプトが同梱されているはずなので以下のコマンドで十分なはずです。
+
+[source]
+----
+$ openocd -f interface/cmsis-dap.cfg -f target/stm32f1x.cfg
+----
+
+"Info : stm32f1x.cpu: hardware has 6 breakpoints, 4 watchpoints" のようなメッセージが出れば成功です。"Examination failed, GDB will be halted. Polling again in 100ms" のようなメッセージが出る場合は接続に成功するまでターゲットのリセットボタンを押しっぱなしにすると良いかもしれません。
+
+次にGDBで先程の実行ファイルを開きます。このとき使うGDBはターゲットのアーキテクチャに対応しているものを使ってください。x86_64のデバッグのみに対応しているGDBでARM向けの実行ファイルを開くとデバッガが命令を理解できないのでおかしなことになります。
+
+[source]
+----
+$ arm-none-eabi-gdb target/thumbv7m-none-eabi/debug/examples/blinky
+----
+
+`.gdbinit` の自動実行が有効に設定されている場合はstm32f1xx-halにあるものがこの時点で実行され、OpenOCDへの接続とプログラムの書き込みが完了します。手動でこれらを行う場合はGDBのシェルで次のコマンドを実行します。stm32f1xx-halの `.gdbinit` はほかにもセミホスティングの有効化などを行っています
+
+[source]
+----
+(gdb) target remote :3333
+(gdb) load
+----
+
+参考として実行結果の例を以下に示します。
+
+[source]
+----
+(gdb) target remote :3333
+Remote debugging using :3333
+0x080008de in cortex_m::peripheral::{{impl}}::take::{{closure}} ()
+    at /home/ikubaku/.cargo/registry/src/github.com-1ecc6299db9ec823/cortex-m-0.6.4/src/peripheral/mod.rs:156
+156                 if unsafe { TAKEN } {
+(gdb) load
+Loading section .vector_table, size 0x400 lma 0x8000000
+Loading section .text, size 0x28a0 lma 0x8000400
+Loading section .rodata, size 0x6dc lma 0x8002ca0
+Start address 0x08000400, load size 13180
+Transfer rate: 3 KB/sec, 4393 bytes/write.
+(gdb)
+----
+
+あとは普段どおりGDBを操作すればOKです。例えばここで `continue` を実行すると実際にターゲットでダウンロードしたプログラムが動きます。
+
+== JTAGを使ってみる
+次にJTAGを使ってターゲットを制御してみます。使ったマイコンボードはSeeedStudio GD32 RISC-V Dev Board: https://wiki.seeedstudio.com/SeeedStudio-GD32-RISC-V-Dev-Board/ です。これにはGigaDeviceのGD32VF103VBT6が載っています。Sipeed Longan Nanoに載っているMCUのI/Oが強化されているバージョンです。このMCUにはもちろんARM CoreSightは載っていないのでJTAGを使って接続することになります。
+
+最初にマイコンボードとSeeeduino XIAOを図のように接続します。新たにTDI（橙）とTDO（青）の接続が必要です。先程SWDIOとSWCLKにつないだ線はそれぞれTMS, TCKに接続します。
+
+image::{static}/images/{slug}/jtag_connection.png[]
+
+使用するサンプルプログラムは seedstudio-gd32v: https://github.com/riscv-rust/seedstudio-gd32v の `examples/blinky.rs` です。先程のやり方と同様に `riscv32imac-unknown-none-elf` ターゲットをインストールしてサンプルプログラムをビルドします。
+
+GD32VF103への接続にはRISC-Vに対応したバージョンのOpenOCDとGD32VF103用の設定スクリプトが必要です。以下の手順ではOpenOCDとして https://github.com/riscv-mcu/riscv-openocd にあるフォークを、デバッグアダプタ兼ターゲットの設定スクリプトとして https://github.com/riscv-mcu/GD32VF103_Firmware_Library/blob/master/Template/openocd_cmsis-dap.cfg を使っています。ない場合は少し手間ですがビルドしてインストールしてください。
+
+ところでJTAGを使いたい場合はOpenOCDの設定スクリプト内で最初にJTAGモードでアダプタを動かすようにコマンドを書く必要があります。GD32VF103以外のターゲット（例えばRaspberry Piなど）をターゲットにする場合は次の行がデバッグアダプタかターゲットのOpenOCD設定スクリプトに含まれているかどうか確認してください。
+
+[source]
+----
+# JTAGモードに設定する
+transport select jtag
+
+# アダプタのクロック周波数を設定する。OpenOCDのバージョンによっては `adapter_khz <周波数[kHz]>` のように書く場合がある
+adapter speed 1000
+----
+
+ここまでできたらOpenOCDを起動してデバッグユニットに接続します。
+
+[source]
+----
+$ openocd -f openocd_cmsis-dap.cfg
+----
+
+次のようなメッセージが表示されれば成功です。
+
+[source]
+----
+Info : cmsis-dap JTAG TLR_RESET
+Info : cmsis-dap JTAG TLR_RESET
+Info : JTAG tap: riscv.cpu tap/device found: 0x1e200a6d (mfg: 0x536 (Nuclei System Technology Co.,Ltd.), part: 0xe200, ver: 0x1)
+Info : JTAG tap: auto0.tap tap/device found: 0x790007a3 (mfg: 0x3d1 (GigaDevice Semiconductor (Beijing)), part: 0x9000, ver: 0x7)
+Warn : AUTO auto0.tap - use "jtag newtap auto0 tap -irlen 5 -expected-id 0x790007a3"
+Info : datacount=4 progbufsize=2
+Info : Exposing additional CSR 3040
+Info : Exposing additional CSR 3041
+Info : Exposing additional CSR 3042
+Info : Exposing additional CSR 3043
+Info : Exposing additional CSR 3044
+Info : Exposing additional CSR 3045
+Info : Exposing additional CSR 3046
+Info : Exposing additional CSR 3047
+Info : Exposing additional CSR 3048
+Info : Exposing additional CSR 3049
+Info : Exposing additional CSR 3050
+Info : Exposing additional CSR 3051
+Info : Exposing additional CSR 3052
+Info : Exposing additional CSR 3053
+Info : Exposing additional CSR 3054
+Info : Exposing additional CSR 3055
+Info : Exposing additional CSR 3056
+Info : Exposing additional CSR 3057
+Info : Exposing additional CSR 3058
+Info : Exposing additional CSR 3059
+Info : Exposing additional CSR 3060
+Info : Exposing additional CSR 3061
+Info : Exposing additional CSR 3062
+Info : Exposing additional CSR 3063
+Info : Exposing additional CSR 3064
+Info : Exposing additional CSR 3065
+Info : Exposing additional CSR 3066
+Info : Exposing additional CSR 3067
+Info : Exposing additional CSR 3068
+Info : Exposing additional CSR 3069
+Info : Exposing additional CSR 3070
+Info : Exposing additional CSR 3071
+Info : Examined RISC-V core; found 1 harts
+Info :  hart 0: XLEN=32, misa=0x40901105
+Info : Listening on port 3333 for gdb connections
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+----
+
+そしてSWDの場合と同様にGDBをOpenOCDに接続して `load` します（少し時間がかかります）。
+
+[source]
+----
+$ riscv32-unknown-elf-gdb target/riscv32imac-unknown-none-elf/debug/examples/blinky
+(gdb) target remote :3333
+(gdb) load
+(gdb) continue
+----
+
+実際にやってみたところ書き込みはできているようですがデバッグ中はGPIOの状態が全然変わりませんでした（OpenOCDを終了してパワーサイクルすると動き始める）。原因はわかりませんがもしかしたらOpenOCDの設定スクリプトに問題があるかデバッグアダプタのパフォーマンスが足かせになっているのかもしれません。
+
+またここでは紹介しませんがRaspberry Pi 3についてもJTAGを使ってデバッグすることができました。Seeeduino XIAOを使ったデバッグプローブはいろいろなところで使えそうです。
+
+== まとめ
+Seeed Arduino DAPLinkを使ってSWDとJTAGを使うターゲットを制御することができました。ソースコードは自前でどんどん改変可能なのでバルク転送やSWOによるトレースに対応させたりステータスLEDを外部に出すなどいろいろなことができそうです。もし手頃なデバッグプローブがないけれどSeeeduino XIAOなら余っているという方は電子工作に活かしてみてはどうでしょうか？
+
+（正直なところデバッグプローブとして売ってるものを使ったほうが罠は踏みにくいと思います...多分。）
+
+以上、KMCアドベントカレンダーの私の記事でした。次はAotsukiさんの「Zoom授業録画自動化した話」です。是非見てみてください。
+
+冬になり、COVID-19を始めとする様々な病気が猛威をふるっています。年始にかけて大事な時期になる方も多いと思うので是非体調に気をつけて過ごしてください。
