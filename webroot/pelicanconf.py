@@ -155,3 +155,6 @@ ARCHIVES_SAVE_AS = 'archives/index.html'
 AUTHORS_SAVE_AS = 'authors/index.html'
 CATEGORIES_SAVE_AS = 'categories/index.html'
 TAGS_SAVE_AS = 'tags/index.html'
+
+# Do not convert Kanji categories and tags
+SLUGIFY_USE_UNICODE = True

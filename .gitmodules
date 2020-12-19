@@ -1,7 +1,6 @@
 [submodule "pelican-plugins"]
 	path = pelican-plugins
-	url = https://github.com/ikubaku/pelican-plugins.git
-	branch = force-utf8
+	url = https://github.com/getpelican/pelican-plugins.git
 [submodule "theme/nest"]
 	path = theme/nest
 	url = https://github.com/ikubaku/nest.git
