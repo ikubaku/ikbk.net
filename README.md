@@ -1,5 +1,5 @@
 # ikbk.net
-Ikubaku's external website
+ikubaku's external website
 
 ## Usage
 To generate th website, run the follwing;
