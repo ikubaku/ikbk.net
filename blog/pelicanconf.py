@@ -37,14 +37,14 @@ DEFAULT_PAGINATION = 10
 #RELATIVE_URLS = True
 
 # Plugins
-PLUGIN_PATHS = ['../pelican-plugins']
+PLUGIN_PATHS = ['./pelican-plugins']
 PLUGINS = ['asciidoc_reader']
 
 ## asciidoc_reader settings
 ASCIIDOC_CMD = "asciidoctor"
 
 # Theme
-THEME = "../theme/nest"
+THEME = "./theme/nest"
 
 # nest theme settings
 SITESUBTITLE = u''

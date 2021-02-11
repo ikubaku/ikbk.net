@@ -29,7 +29,7 @@ In the directory 'style', run `npm i` to download all style frameworks.
 To generate th website, run the follwing;
 ```
 $ source .venv/bin/activate
-$ cd ./webroot
+$ cd ./blog
 $ PATH=../:$PATH pelican content
 
 # For preview, after activating the virtual environment;
