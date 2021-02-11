@@ -9,6 +9,3 @@
 # Ruby
 .bundler/
 .bundle/
-
-# Pelican
-webroot/output/
