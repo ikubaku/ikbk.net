@@ -31,7 +31,7 @@ jobs:
       run: |
         source .venv/bin/activate
         cd ./webroot
-        pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH"
+        pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
         PATH=../:$PATH pelican content -s publishconf.py -e SITEURL="https://stfonly.ikbk.net/webpreview/$pr_number"
     - name: Populate SSH credentials
       shell: bash
@@ -50,5 +50,5 @@ jobs:
         SSH_USER: ${{ secrets.ASSET_SYNC_USERNAME }}
         SSH_PORT: ${{ secrets.SSH_PORT }}
       run: |
-        pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH"
+        pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
         rsync -ac --delete -O -e "ssh -p $SSH_PORT -l $SSH_USER" webroot/output/ "ikbk.net:/srv/stfonly/webpreview/$pr_number")
