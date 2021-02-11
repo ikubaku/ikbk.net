@@ -51,4 +51,4 @@ jobs:
         SSH_PORT: ${{ secrets.SSH_PORT }}
       run: |
         pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-        rsync -ac --delete -O -e "ssh -p $SSH_PORT -l $SSH_USER" webroot/output/ "ikbk.net:/srv/stfonly/webpreview/$pr_number")
+        rsync -ac --delete -O -e "ssh -p $SSH_PORT -l $SSH_USER" webroot/output/ "ikbk.net:/srv/stfonly/webpreview/$pr_number"
