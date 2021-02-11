@@ -1,0 +1,23 @@
+{
+  "name": "ikbk_net_styles",
+  "version": "1.0.0",
+  "description": "The collection of style assets for ikbk.net",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikubaku/ikbk.net.git"
+  },
+  "author": "ikubaku",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ikubaku/ikbk.net/issues"
+  },
+  "homepage": "https://github.com/ikubaku/ikbk.net#readme",
+  "dependencies": {
+    "@efrolic/efrolic": "^0.3.1",
+    "@fortawesome/fontawesome-free": "^5.15.2"
+  }
+}
