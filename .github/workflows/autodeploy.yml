@@ -32,7 +32,7 @@ jobs:
     - name: Build the Webpage
       run: |
         source .venv/bin/activate
-        cd ./webroot
+        cd ./blog
         PATH=../:$PATH pelican content -s publishconf.py
 
     - name: Populate SSH credentials
@@ -52,4 +52,4 @@ jobs:
       env:
         SSH_USER: ${{ secrets.ASSET_SYNC_USERNAME }}
         SSH_PORT: ${{ secrets.SSH_PORT }}
-      run: rsync -ac --delete -O -e "ssh -p $SSH_PORT -l $SSH_USER" webroot/output/ ikbk.net:/srv/http/ikbk.net
+      run: rsync -ac --delete -O -e "ssh -p $SSH_PORT -l $SSH_USER" blog/output/ ikbk.net:/srv/http/ikbk.net
