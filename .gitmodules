@@ -1,7 +1,7 @@
 [submodule "pelican-plugins"]
-	path = pelican-plugins
+	path = blog/pelican-plugins
 	url = https://github.com/getpelican/pelican-plugins.git
 [submodule "theme/nest"]
-	path = theme/nest
+	path = blog/theme/nest
 	url = https://github.com/ikubaku/nest.git
 	branch = master
