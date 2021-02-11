@@ -12,6 +12,11 @@ $ PATH=../:$PATH pelican content
 $ pelican -l -p 8080
 ```
 
+## Previewing
+The resulting web pages from PRs are deployed on webpreview/PR number.
+
+The PRs from branches beginning with no-preview/ are ignored and will not be deployed on the server.
+
 ## Deployment
 1. Push all the updates to the `master` branch.
 2. Create the pull-request to the `deploy` branch.
