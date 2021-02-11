@@ -21,7 +21,7 @@ jobs:
         
     - name: Install missing programs
       run: |
-        apt install jq
+        sudo apt install jq
         pip3 install virtualenv
         gem install bundler
     - name: Prepare the build environment
