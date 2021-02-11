@@ -22,6 +22,9 @@ You will need access to the GitHub Packages repository. Create a personal access
 ### 2. Set up everything
 Run `prepare.sh`.
 
+### 3. (Optional) Download the style frameworks
+In the directory 'style', run `npm i` to download all style frameworks.
+
 ## Usage
 To generate th website, run the follwing;
 ```
