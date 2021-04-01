@@ -4,7 +4,7 @@
 
 == ikubaku(Hideyuki Teramura)
 
-An unknown device. Likes programming, electronics. An undergraduate learning at the Department of Information Science, https://www.kit.ac.jp/[Kyoto Institute of Technology].
+An unknown device. A programming and electronics lover. An undergraduate learning at the Department of Information Science, https://www.kit.ac.jp/[Kyoto Institute of Technology].
 
 不明なデバイス。プログラミング、電子工作とか。京都工芸繊維大学、情報工学課程
 
