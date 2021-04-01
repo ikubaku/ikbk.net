@@ -24,12 +24,10 @@ AUTHOR_FEED_RSS = None
 # Blogroll
 LINKS = (('KIT SEL', 'https://se.is.kit.ac.jp/'),
          ('KMC', 'https://www.kmc.gr.jp/'),
-         ('KITCC', 'http://www.kitcc.org/'),
-         ('TechGarage', 'https://twitter.com/TechGarageKyoto/'),)
+         ('KITCC', 'http://www.kitcc.org/'),)
 
 # Social widget
-SOCIAL = (('GitHub', 'https://github.com/ikubaku'),
-          ('Twitter', 'https://twitter.com/ikubaku10'),)
+SOCIAL = (('GitHub', 'https://github.com/ikubaku'),)
 
 DEFAULT_PAGINATION = 10
 
@@ -37,14 +35,14 @@ DEFAULT_PAGINATION = 10
 #RELATIVE_URLS = True
 
 # Plugins
-PLUGIN_PATHS = ['../pelican-plugins']
+PLUGIN_PATHS = ['./pelican-plugins']
 PLUGINS = ['asciidoc_reader']
 
 ## asciidoc_reader settings
 ASCIIDOC_CMD = "asciidoctor"
 
 # Theme
-THEME = "../theme/nest"
+THEME = "./theme/nest"
 
 # nest theme settings
 SITESUBTITLE = u''
@@ -62,7 +60,7 @@ NEST_SITEMAP_MENU = [('Archives', '/archives/'),('Tags','/tags/')]
 NEST_SITEMAP_ATOM_LINK = u'Feed'
 NEST_SOCIAL_COLUMN_TITLE = u'Meet me at:'
 NEST_LINKS_COLUMN_TITLE = u'Links'
-NEST_COPYRIGHT = u'&copy; ikubaku 2020. All rights reserved.'
+NEST_COPYRIGHT = u'&copy; ikubaku 2021. All rights reserved.'
 
 ## index.html
 NEST_INDEX_HEAD_TITLE = u'Home'

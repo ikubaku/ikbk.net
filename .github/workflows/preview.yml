@@ -1,15 +1,13 @@
-name: Automated Build & Deploy
-
+name: Deploy PR Preview
 on:
-  workflow_dispatch:
-  
-  push:
-    branches: [ deploy ]
+  pull_request:
+    branches-ignore:
+      - 'no-preview/**'
 
 jobs:
-  build:
+  deploy_preview:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v2
       
@@ -23,9 +21,9 @@ jobs:
         
     - name: Install missing programs
       run: |
+        sudo apt install jq
         pip3 install virtualenv
         gem install bundler
-
     - name: Prepare the build environment
       run: ./prepare.sh
 
@@ -33,8 +31,8 @@ jobs:
       run: |
         source .venv/bin/activate
         cd ./blog
-        PATH=../:$PATH pelican content -s publishconf.py
-
+        pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+        PATH=../:$PATH pelican content -s publishconf.py -e SITEURL="https://stfonly.ikbk.net/webpreview/$pr_number"
     - name: Populate SSH credentials
       shell: bash
       env:
@@ -46,10 +44,11 @@ jobs:
         echo "$SSH_SECRET_KEY" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
         echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-
     - name: Deploy the webpage
       shell: bash
       env:
         SSH_USER: ${{ secrets.ASSET_SYNC_USERNAME }}
         SSH_PORT: ${{ secrets.SSH_PORT }}
-      run: rsync -ac --delete -O -e "ssh -p $SSH_PORT -l $SSH_USER" blog/output/ ikbk.net:/srv/http/ikbk.net
+      run: |
+        pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+        rsync -ac --delete -O -e "ssh -p $SSH_PORT -l $SSH_USER" blog/output/ "ikbk.net:/srv/stfonly/webpreview/$pr_number"
