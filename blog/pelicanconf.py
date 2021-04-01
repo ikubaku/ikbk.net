@@ -24,12 +24,10 @@ AUTHOR_FEED_RSS = None
 # Blogroll
 LINKS = (('KIT SEL', 'https://se.is.kit.ac.jp/'),
          ('KMC', 'https://www.kmc.gr.jp/'),
-         ('KITCC', 'http://www.kitcc.org/'),
-         ('TechGarage', 'https://twitter.com/TechGarageKyoto/'),)
+         ('KITCC', 'http://www.kitcc.org/'),)
 
 # Social widget
-SOCIAL = (('GitHub', 'https://github.com/ikubaku'),
-          ('Twitter', 'https://twitter.com/ikubaku10'),)
+SOCIAL = (('GitHub', 'https://github.com/ikubaku'),)
 
 DEFAULT_PAGINATION = 10
 
