@@ -27,7 +27,8 @@ LINKS = (('KIT SEL', 'https://se.is.kit.ac.jp/'),
          ('KITCC', 'http://www.kitcc.org/'),)
 
 # Social widget
-SOCIAL = (('GitHub', 'https://github.com/ikubaku'),)
+SOCIAL = (('GitHub', 'https://github.com/ikubaku'),
+          ('Pixiv', 'https://www.pixiv.net/users/25534317'),)
 
 DEFAULT_PAGINATION = 10
 
