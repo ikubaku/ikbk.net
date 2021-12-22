@@ -1,0 +1,80 @@
+= rp2040_zigをZig 0.9.0に対応させました
+
+:date: 2021-12-22 23:00
+:slug: rp2040_zig_1
+:tags: technical, hardware, baremetal, raspberrypi
+:category: 技術系
+:summary: RP2040をZig言語でプログラミングする話です
+
+この記事は https://adventar.org/calendars/6609[あくあたん工房Advent Calendar 2021]22日目の記事です。21日目の記事は準備中です（投稿され次第リンクを追記します）。ソフトウェア工学研究室所属ということで今回寄稿させていただきました。
+
+今年のはじめからRaspberry Pi Picoのプログラムを最近はまっている https://ziglang.org/[Zig言語] で書く挑戦（？）を練習がてらやっています。暑くなる前にビルドスクリプトと搭載されているマイコンであるRP2040の初期化処理、GPIOの制御までひとまず実装したあとしばらく放置していたのですが、いつの間にかたくさんstarをもらっていたのでそろそろ実装の続きをやることにしました。 https://github.com/ikubaku/rp2040_zig で開発しているので、ぜひ見ていただけると嬉しいです。
+
+== 言語のバージョンアップに伴う変更
+Zig言語はまだ開発段階にあるプログラミング言語ですので時々標準ライブラリや言語自体の仕様が変わってしまいます。そして最近になってバージョン0.9.0がリリースされたので、自分のコードに機能追加をする前にバージョンアップの対応をすることになりました。本当は機能追加に関する記事を書く計画だったのですがこの対応だけで結構時間がかかってしまったのでまた後日機能を増やしていこうと思います。この記事では備忘録としてZig言語ビルドシステムの変更対応について書きます。
+
+== Zig言語ビルドシステム
+Zig言語ではプログラムのビルド手順をビルドスクリプトを書くことで決めます。基本的には `zig init-exe` などで生成されるデフォルトのビルドスクリプトをそのまま使うことが多いですが、ベアメタルプログラムのように独自のビルドスクリプトを記述したい場合が多々あります。ビルドスクリプトを作成する際にコアとなる概念に `Step` があります。これはプログラムのビルドにおける手順1つ1つを抽象化したものです。例えば「 `example.zig` をオブジェクトファイルにコンパイルする」、「作成したオブジェクトファイルとライブラリをリンクして実行ファイルにする」のような手順が `Step` として記述されます。それぞれの `Step` は依存関係によって関連付けられ、ビルド時にどの `Step` をどの順番に実行するかが自動的に決定されます。
+
+=== `std.build.FileSource` の追加
+ビルドスクリプトを書く中である `Step` で他の `Step` で生成されたファイルやデータを使う必要が出てくることがあります。これまでそのようなファイルやデータを `Step` 間で共有するには標準ライブラリにある特殊な `Step` を使って全て任せてしまう（PC用の実行ファイルを作る場合など）かファイルパスを次の `Step` に渡して再度開く必要がありました。Zig 0.9.0ではここに仕様変更があり `std.build.FileSource` という型のデータを使って出力ファイルを表すことっができるようになりました。状況によって形式が異なる出力ファイルを抽象化して渡せるようになったので便利そうな機能です。
+
+一方で以前の方法で出力ファイルを持ち回していたビルドスクリプトでは改修が必要になります。今回の変更でビルドスクリプト内でファイルを表すときはすべて `FileSource` にくるむ必要があるようになったほか、明示的に出力パスが指定されなかった `Step` では `getOutputPath` 関数から出力ファイルの場所を取得できなくなったので、これらの仕様を前提にしていた自分のビルドスクリプトを書き直すことになりました。
+
+=== パスがわかっているファイルを渡す
+リンカスクリプトなどビルド前に所与であるようなファイルは単に対応する `FileSource` を作成して渡すだけでOKです。例えば以下のように変更すれば十分です。
+
+[source, zig]
+----
+// Before
+elf.setLinkerScriptPath("src/linker.ld");
+
+// After
+elf.setLinkerScriptPath(
+  std.build.FileSource {
+    .path = "src/linker.ld",
+  }
+);
+----
+
+=== 出力ファイルを `FileSource` で取得して `Step` の中でパスを調べる
+出力ファイルによっては `getOutputPath` 関数で出力パスを知ることができないケースができたので、出力ファイルをある `Step` の中で使いたい場合は `FileSource` で一度受け取ることになります。その後 `Step` の中でどのように出力ファイルのパスを取得するのかドキュメントの書かれていなかったので少し手こずりましたが、Zig言語内部での使われ方などを見たところ次のような手順を踏むことで取得できそうです。
+
+. `Step` の作成時（ `init` が呼ばれるとき）にビルドスクリプトの `Builder` への参照と `FileSource` をもらっておく。 `FileSource` については参照ではなく値として取得しておく必要がある。
+. `Step` の処理の中で取得した `FileSource` の `getPath` 関数を呼び出して出力パスを取得する。
+
+例えばこのような形で `Step` を書けばOKです。
+
+[source, zig]
+----
+const ExampleStep = struct {
+  step: std.build.Step,
+  input_file_source: std.build.FileSource,
+
+  // BuilderはgetPathするときに必要なので参照を覚えておく。
+  builder: *std.build.Builder,
+
+  pub fn init(
+    builder: *std.build.Builder,
+    name: []const u8,
+    input_file_source: std.build.FileSource,
+  ) ExampleStep {
+    return .{
+      .step = std.build.Step.init(.custom, name, builder.allocator, run_step),
+      .input_file_source = input_file_source,
+      .builder = builder,
+    };
+  }
+
+  fn run_step(step: *Step) {
+    const self = #fieldParentPtr(ExampleStep, "step", step);
+    // getPathは []const u8 型でパスを教えてくれる
+    const input_file_path = self.input_file_source.getPath(self.builder);
+
+    // いろいろする
+  }
+};
+----
+
+== 今後
+以上少しはまったところの説明でした。今後はGPIO関連のコードの再設計やタイマを制御するコードの実装をやっていこうと思います。
