@@ -2,6 +2,18 @@
 
 :slug: works
 
+== 電子工作
+=== 置き時計
+Raspberry Pi Zero WHとPIC18マイコンで作成したもの。時刻と日付、気温とかが出ます。一応開発中。
+
+リポジトリ:: https://github.com/ikubaku/dot_matrix_clock
+
+=== 起床・就寝報告装置
+Obnizで作品を作る大会で作ったもの。ベッドで寝たり起きたりするとMastodonにメッセージが飛びます。
+
+関連ページ:: https://elchika.com/article/3e0ae963-387c-4ec4-89c5-d0acb7a27fe1/
+リポジトリ:: https://github.com/ikubaku/kokekokkod , https://github.com/ikubaku/kokekokko-obniz
+
 == ゲーム(Games)
 
 === Avoid Boiled!
@@ -27,3 +39,8 @@ Zig言語で書いたファームウェアからLPC81x系のブートROM APIを�
 brainf*ckマシン。Karutaで実装
 
 リンク:: https://github.com/ikubaku/bfmachine
+
+=== csgen
+調整さん ( https://chouseisan.com/ ）の候補日程を自動生成するツール。YAMLで生成パターンを指定して任意の期間分のアンケートを生成できます。
+
+リポジトリ:: https://github.com/ikubaku/csgen
