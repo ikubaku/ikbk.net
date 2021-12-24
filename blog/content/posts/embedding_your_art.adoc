@@ -53,7 +53,7 @@
 
 Wio Terminalの液晶ディスプレイの解像度は320×240です。元画像のサイズは8192×8192だったのでまずこれを画像ビューアで240x240に縮小してみます。
 
-image::{static}/images/{slug}/image_shrinked.png[]
+image::{static}/images/{slug}/image_shrinked.png[width=720]
 
 一見すると大丈夫そうです。さらに https://wiki.seeedstudio.com/Wio-Terminal-LCD-Loading-Image/#image-format-configuration の手順に従ってWio Terminalで表示可能な形式のビットマップ画像データ（拡張子がbmpだが実はBMP画像ではない）に変換します。16bitカラーとして出力してサンプルの通りに表示させてみたところ以下の画像のようになりました。
 
@@ -64,7 +64,7 @@ image::{static}/images/{slug}/wio_terminal.jpg[]
 === モノクロOLEDディスプレイに表示する
 今回使うモノクロOLEDディスプレイは画素に階調がありません。したがって画像の縮小以外にも前処理が必要になります。ここでは元のイラストに2階調処理をかけた後、先にできる不自然な塊を除去する形でイラストをドット絵化しました。また黒目の部分と体色のアクセントになっている色の部分にも塗りを追加しました。調整後のドット絵が次の画像です（おそらく多くの端末で見づらいので拡大しています）。
 
-image::{static}/images/{slug}/image_shrinked_dot.png[]
+image::{static}/images/{slug}/image_shrinked_dot.png[width=720]
 
 後は画像を1bitBMPに変換しておきます。
 
